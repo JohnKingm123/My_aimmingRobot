@@ -39,7 +39,9 @@ class recogRobot:
                 print(self.degreeX,self.degreeY)
                 xx=int(x+w//2)
                 yy=int(y+h//2)
-                cv2.circle(frame, (xx,yy), h, (0, 255, 0), 2)
+                # cv2.circle(frame, (xx,yy), h, (0, 255, 0), 2)
+                cv2.line(frame, (xx-10,yy), (xx+10,yy), (0, 255, 0), 2)
+                cv2.line(frame, (xx,yy-10), (xx,yy+10), (0, 255, 0), 2)
                 self.tracking(xx,yy)
                 # time.sleep(1)    
             
@@ -80,32 +82,32 @@ class recogRobot:
     def servoTrans(self,x,y):
         
         self.arduino.write(bytes(str(x)+','+str(y),'utf-8'))
-        cv2.waitKey(50)
+        time.sleep(1)
         # self.arduino.write(bytes(str(self.degreeX)+','+str(self.degreeY),'utf-8'))
 
     def up(self):
         self.degreeY+=6
         self.degreeY%=180
         self.servoTrans(self.degreeX,self.degreeY)
-        time.sleep(1)
+        # time.sleep(1)
 
     def down(self):
         self.degreeY-=6
         self.degreeY%=180
         self.servoTrans(self.degreeX,self.degreeY)
-        time.sleep(1)
+        # time.sleep(1)
 
     def left(self):
         self.degreeX+=7
         self.degreeX%=180
         self.servoTrans(self.degreeX,self.degreeY)
-        time.sleep(1)
+        # time.sleep(1)
     
     def right(self):
         self.degreeX-=7
         self.degreeX%=180
         self.servoTrans(self.degreeX,self.degreeY)
-        time.sleep(1)
+        # time.sleep(1)
 
 
 
@@ -115,7 +117,7 @@ class recogRobot:
 def run ():
     r = recogRobot()
     r.streaming()
-    
+    r.servoTrans(103,103)
     # i=30
     # while i<150:        
     #     r.servoTrans(i,i)
